@@ -1,8 +1,15 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+import { useAnimeListQuery } from '../src/graphql/anime-list'
 
 export default function Home() {
+  const animeList = useAnimeListQuery({
+    page: 1,
+    perPage: 9
+  });
+  console.log(animeList);
+
   return (
     <div className={styles.container}>
       <Head>
