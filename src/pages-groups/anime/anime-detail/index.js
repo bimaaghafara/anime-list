@@ -23,9 +23,9 @@ const AnimeDetail = () => {
     { id: Number(router?.query?.id || 0) },
     { enabled: router?.isReady }
   );
-  
-  if ( error ) return <>Error!</>
-  if ( isLoading || !data ) return <>Loading...</>
+
+  if ( error ) return <div className='loader'>Error!</div>;
+  if ( isLoading || !data ) return <div className='loader'>Loading . . .</div>;
 
   const anime = data?.Media;
 
@@ -87,6 +87,7 @@ const AnimeDetail = () => {
           <Grid item xs={12} sm={8} md={9}>
             <Paper sx={{ p: 2 }}>
               <Typography sx={sx.charactersTitle}>Characters</Typography>
+              {!characters?.length && <Typography sx>Not available.</Typography>}
               <Box>
                 {characters.map(char => (
                   <Box key={char.name} sx={sx.characterContainer}>

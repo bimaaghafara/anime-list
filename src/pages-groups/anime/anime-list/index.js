@@ -28,8 +28,8 @@ const AnimeList = () => {
     { enabled: router?.isReady }
   );
 
-  if ( error ) return <>Error!</>
-  if ( isLoading || !data ) return <>Loading...</>
+  if ( error ) return <div className='loader'>Error!</div>;
+  if ( isLoading || !data ) return <div className='loader'>Loading . . .</div>;
 
   const animeList = data?.Page?.media || [];
   const totalPage = data?.Page?.pageInfo?.total || 0;
