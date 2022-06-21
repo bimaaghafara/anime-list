@@ -40,6 +40,10 @@ const sx = {
     verticalAlign: 'top',
   },
   titleContainer: {
+    marginTop: {
+      xs: '18px',
+      sm: 'unset'
+    },
     marginBottom: '16px',
     '& .MuiTypography-root': {
       fontSize: {
@@ -60,6 +64,14 @@ const sx = {
       lg: '18px',
       xl: '22px',
     },
+  },
+  leftDetail: {
+    display: {
+      xs: 'inline-block',
+      sm: 'block'
+    },
+    lineHeight: '1.5',
+    margin: '12px'
   }
 }
 

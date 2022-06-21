@@ -12,6 +12,20 @@ export const AnimeDetailSchema = gql`
       coverImage {
         large
       }
+      format
+      episodes
+      duration
+      status
+      startDate{
+        year
+        month
+        day
+      }
+      endDate{
+        year
+        month
+        day
+      }
     }
   }
 `;
