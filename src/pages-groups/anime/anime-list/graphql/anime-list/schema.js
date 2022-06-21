@@ -9,6 +9,9 @@ export const AnimeListSchema = gql`
       page: $page
       perPage: $perPage
     ){
+      pageInfo{
+        total
+      }
       media(
         type: ANIME
       ) {

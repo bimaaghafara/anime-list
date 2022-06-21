@@ -1,3 +1,5 @@
+const itemsCount = (n) => `calc(100% / ${n})`;
+
 const sx = {
   root: {
     padding: '12px',
@@ -11,16 +13,26 @@ const sx = {
     padding: '12px 12px 0px'
   },
   animeCard: {
-    maxWidth: {
-      xs: '100%',
-      sm: '50%',
-      md: '33.33%',
-      lg: '25%',
-      xl: '20%'
+    width: {
+      xs: itemsCount(1),
+      sm: itemsCount(2),
+      md: itemsCount(3),
+      lg: itemsCount(4),
+      xl: itemsCount(5)
     },
     display: 'inline-block',
     padding: '12px',
     verticalAlign: 'top'
+  },
+  paginationContainer: {
+    marginTop: '12px',
+    display: 'flex',
+    flexDirection: {
+      xs: 'column',
+      sm: 'row'
+    },
+    justifyContent: 'flex-end',
+    alignItems: 'center',
   }
 }
 

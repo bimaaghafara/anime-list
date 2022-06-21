@@ -1,26 +1,57 @@
 // libs
+import { useState } from 'react';
 import { useRouter } from 'next/router';
 
 // components
-import { Box, Typography } from '@mui/material';
+import {
+  Box,
+  Typography,
+  Pagination,
+  PaginationItem,
+  FormControl,
+  Select,
+  MenuItem
+} from '@mui/material';
 import { AnimeCard } from './components/anime-card';
+
+// graphql
 import { useAnimeListQuery } from './graphql/anime-list';
 
 // styles
 import sx from './styles';
 
+const usePagination = () => {
+  const [page, setPage] = useState(1);
+  const [perPage, setPerPage] = useState(10);
+  const handleChangePerPage = (e) => {
+    setPage(1);
+    setPerPage(e.target.value);
+  }
+  return {
+    page,
+    setPage,
+    perPage,
+    setPerPage,
+    handleChangePerPage,
+  }
+}
+
 export default function AnimeList() {
   const router = useRouter();
-  const { data, isLoading, error } = useAnimeListQuery({
-    page: 1,
-    perPage: 10
-  });
+  const {
+    page,
+    setPage,
+    perPage,
+    handleChangePerPage,
+  } = usePagination();
+  const { data, isLoading, error } = useAnimeListQuery({ page, perPage });
 
   if ( error ) return <>Error!</>
-
   if ( isLoading || !data ) return <>Loading...</>
 
   const animeList = data?.Page?.media || [];
+  const totalPage = data?.Page?.pageInfo?.total || 0;
+
   return (
     <Box sx={sx.root}>
       <Typography sx={sx.title}>Anime List</Typography>
@@ -33,6 +64,22 @@ export default function AnimeList() {
           />
         </Box>
       )}
+      <Box sx={sx.paginationContainer}>
+        <FormControl size="small">
+          <Select value={perPage} onChange={handleChangePerPage}>
+            <MenuItem value={5}>5</MenuItem>
+            <MenuItem value={10}>10</MenuItem>
+            <MenuItem value={25}>25</MenuItem>
+            <MenuItem value={50}>50</MenuItem>
+          </Select>
+        </FormControl>
+        <Pagination
+          page={page}
+          count={Math.ceil((totalPage > 5000 ? 5000 : totalPage) / perPage)}
+          onChange={(e, value) => setPage(value)}
+          renderItem={(item) => <PaginationItem {...item} />}
+        />
+      </Box>
     </Box>
   )
 }
