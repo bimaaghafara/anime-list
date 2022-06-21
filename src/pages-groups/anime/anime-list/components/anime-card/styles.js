@@ -3,8 +3,6 @@ const sx = {
     fontSize: {
       xs: '16px',
       md: '18px',
-      lg: '24px',
-      xl: '27px',
     },
   },
   bannerIamge: (src) => ({
@@ -18,8 +16,6 @@ const sx = {
     fontSize: {
       xs: '12px',
       md: '14px',
-      lg: '18px',
-      xl: '22px',
     },
   },
   link: {

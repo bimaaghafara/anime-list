@@ -9,6 +9,9 @@ export const AnimeDetailSchema = gql`
       }
       description
       bannerImage
+      coverImage {
+        large
+      }
     }
   }
 `;

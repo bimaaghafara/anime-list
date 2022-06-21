@@ -20,7 +20,6 @@ const sx = {
       sm: itemsCount(2),
       md: itemsCount(3),
       lg: itemsCount(4),
-      xl: itemsCount(5)
     },
     display: 'inline-block',
     padding: '12px',
