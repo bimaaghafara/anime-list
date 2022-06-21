@@ -44,7 +44,19 @@ const AnimeDetail = () => {
       text: [anime?.endDate?.year, anime?.endDate?.month, anime?.endDate?.day].join(' - '),
       label: 'End Date'
     },
+    { value: anime?.averageScore, text: `${anime?.averageScore}%`, label: 'Average Score' },
+    { value: anime?.meanScore, text: `${anime?.meanScore}%`, label: 'Mean Score' },
+    { value: anime?.popularity, text: anime?.popularity.toLocaleString('en-US'), label: 'Popularity' },
+    { value: anime?.favourites, text: anime?.favourites.toLocaleString('en-US'), label: 'Favourites' },
   ];
+
+  const characters = anime?.characters?.edges?.map(char => ({
+    name: char?.node?.name?.full,
+    role: char?.role,
+    image: char?.node?.image?.medium
+  }));
+
+  console.log(characters);
 
   return (
     <Box sx={sx.root}>
@@ -64,16 +76,27 @@ const AnimeDetail = () => {
         <Grid container spacing={2}>
           <Grid item xs={12} sm={4} md={3}>
             <Paper sx={{ p: 2 }}>
-              {leftDetails.filter(e => !!e.value).map((e) => (
-                <Box sx={sx.leftDetail} key={e.value}>
+              {leftDetails.filter(e => !!e.value).map((e, i) => (
+                <Box sx={sx.leftDetail} key={i}>
                   <Box>{e.label}</Box>
-                  <Box>{e.text}</Box>
+                  <Box sx={sx.leftDetailsText}>{e.text}</Box>
                 </Box>
               ))}
             </Paper>
           </Grid>
           <Grid item xs={12} sm={8} md={9}>
-            <Paper sx={{ p: 2 }}>xs=6 md=4</Paper>
+            <Paper sx={{ p: 2 }}>
+              <Typography sx={sx.charactersTitle}>Characters</Typography>
+              <Box>
+                {characters.map(char => (
+                  <Box key={char.name} sx={sx.characterContainer}>
+                    <Box sx={sx.characterIamge(char.image)} />
+                    <Box sx={sx.characterName}>{char.name}</Box>
+                    <Box sx={sx.characterRole}>{char.role}</Box>
+                  </Box>  
+                ))}
+              </Box>
+            </Paper>
           </Grid>
         </Grid>
       </Box>

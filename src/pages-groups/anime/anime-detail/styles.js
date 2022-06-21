@@ -70,8 +70,40 @@ const sx = {
       xs: 'inline-block',
       sm: 'block'
     },
+    width: {
+      xs: '50%',
+      sm: '100%',
+    },
     lineHeight: '1.5',
-    margin: '12px'
+    margin: '12px 0',
+  },
+  leftDetailsText: {
+    color: '#777',
+    fontSize: '14px'
+  },
+  charactersTitle: {
+    fontSize: '24px'
+  },
+  characterContainer: {
+    display: 'inline-block',
+    textAlign: 'center',
+    verticalAlign: 'top',
+    padding: '12px',
+    maxWidth: '124px'
+  },
+  characterIamge: (src) => ({
+    background: `url("${src}") #eee no-repeat center center / cover`,
+    backgroundSize: 'cover',
+    height: '150px',
+    width: '100px',
+    marginBottom: '8px'
+  }),
+  characterName: {
+    fontSize: '12px'
+  },
+  characterRole: {
+    fontSize: '12px',
+    color: '#777'
   }
 }
 

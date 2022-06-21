@@ -16,6 +16,10 @@ export const AnimeDetailSchema = gql`
       episodes
       duration
       status
+      averageScore
+      meanScore
+      popularity
+      favourites
       startDate{
         year
         month
@@ -25,6 +29,19 @@ export const AnimeDetailSchema = gql`
         year
         month
         day
+      }
+      characters{
+        edges{
+          role
+          node {
+            name {
+              full
+            }
+            image {
+              medium
+            }
+          }
+        }
       }
     }
   }
