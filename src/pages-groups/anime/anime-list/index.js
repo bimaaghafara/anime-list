@@ -2,6 +2,9 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 
+// hooks
+import usePagination from 'src/hooks/usePagination';
+
 // components
 import {
   Box,
@@ -19,22 +22,6 @@ import { useAnimeListQuery } from './graphql/anime-list';
 
 // styles
 import sx from './styles';
-
-const usePagination = () => {
-  const [page, setPage] = useState(1);
-  const [perPage, setPerPage] = useState(10);
-  const handleChangePerPage = (e) => {
-    setPage(1);
-    setPerPage(e.target.value);
-  }
-  return {
-    page,
-    setPage,
-    perPage,
-    setPerPage,
-    handleChangePerPage,
-  }
-}
 
 export default function AnimeList() {
   const router = useRouter();
