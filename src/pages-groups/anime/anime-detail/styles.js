@@ -82,7 +82,11 @@ const sx = {
     fontSize: '14px'
   },
   charactersTitle: {
-    fontSize: '24px'
+    fontSize: '24px',
+    paddingLeft: '12px'
+  },
+  noCharacters: {
+    paddingLeft: '12px'
   },
   characterContainer: {
     display: 'inline-block',
@@ -104,7 +108,8 @@ const sx = {
   characterRole: {
     fontSize: '12px',
     color: '#777'
-  }
+  },
+  
 }
 
 export default sx;
