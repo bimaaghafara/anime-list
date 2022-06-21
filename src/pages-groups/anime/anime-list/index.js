@@ -1,9 +1,5 @@
 // libs
-import { useState } from 'react';
 import { useRouter } from 'next/router';
-
-// hooks
-import usePagination from 'src/hooks/usePagination';
 
 // components
 import {
@@ -17,27 +13,29 @@ import {
 } from '@mui/material';
 import { AnimeCard } from './components/anime-card';
 
-// graphql
-import { useAnimeListQuery } from './graphql/anime-list';
-
 // styles
 import sx from './styles';
 
-export default function AnimeList() {
+// graphql
+import { useAnimeListQuery } from './graphql/anime-list';
+
+const AnimeList = () => {
   const router = useRouter();
-  const {
-    page,
-    setPage,
-    perPage,
-    handleChangePerPage,
-  } = usePagination();
-  const { data, isLoading, error } = useAnimeListQuery({ page, perPage });
+  const page = Number(router?.query?.page || 1);
+  const perPage = Number(router?.query?.perPage || 10);
+  const { data, isLoading, error } = useAnimeListQuery(
+    { page, perPage },
+    { enabled: router?.isReady }
+  );
 
   if ( error ) return <>Error!</>
   if ( isLoading || !data ) return <>Loading...</>
 
   const animeList = data?.Page?.media || [];
   const totalPage = data?.Page?.pageInfo?.total || 0;
+  const goToPage = ({page, perPage }) => {
+    router.push(`/anime?page=${page}&perPage=${perPage}`);
+  }
 
   return (
     <Box sx={sx.root}>
@@ -53,20 +51,22 @@ export default function AnimeList() {
       )}
       <Box sx={sx.paginationContainer}>
         <FormControl size="small">
-          <Select value={perPage} onChange={handleChangePerPage}>
-            <MenuItem value={5}>5</MenuItem>
-            <MenuItem value={10}>10</MenuItem>
-            <MenuItem value={25}>25</MenuItem>
-            <MenuItem value={50}>50</MenuItem>
+          <Select
+            value={perPage}
+            onChange={(e) => goToPage({ page: 1, perPage: e.target.value })}
+          >
+            {[5, 10, 25, 50].map(e => <MenuItem key={e} value={e}>{e}</MenuItem>)}
           </Select>
         </FormControl>
         <Pagination
           page={page}
           count={Math.ceil((totalPage > 5000 ? 5000 : totalPage) / perPage)}
-          onChange={(e, value) => setPage(value)}
+          onChange={(e, value) => goToPage({ page: value, perPage })}
           renderItem={(item) => <PaginationItem {...item} />}
         />
       </Box>
     </Box>
   )
 }
+
+export default AnimeList;
