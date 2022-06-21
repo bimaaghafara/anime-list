@@ -39,31 +39,33 @@ const AnimeList = () => {
 
   return (
     <Box sx={sx.root}>
-      <Typography sx={sx.title}>Anime List</Typography>
-      {animeList.map((anime) => 
-        <Box key={anime.id} sx={sx.animeCard}>
-          <AnimeCard
-            key={anime.id}
-            anime={anime}
-            onClick={() => router.push(`/anime/${anime.id}`)}
+      <Box sx={sx.content}>
+        <Typography sx={sx.title}>Anime List</Typography>
+        {animeList.map((anime) => 
+          <Box key={anime.id} sx={sx.animeCard}>
+            <AnimeCard
+              key={anime.id}
+              anime={anime}
+              onClick={() => router.push(`/anime/${anime.id}`)}
+            />
+          </Box>
+        )}
+        <Box sx={sx.paginationContainer}>
+          <FormControl size="small">
+            <Select
+              value={perPage}
+              onChange={(e) => goToPage({ page: 1, perPage: e.target.value })}
+            >
+              {[5, 10, 25, 50].map(e => <MenuItem key={e} value={e}>{e}</MenuItem>)}
+            </Select>
+          </FormControl>
+          <Pagination
+            page={page}
+            count={Math.ceil((totalPage > 5000 ? 5000 : totalPage) / perPage)}
+            onChange={(e, value) => goToPage({ page: value, perPage })}
+            renderItem={(item) => <PaginationItem {...item} />}
           />
         </Box>
-      )}
-      <Box sx={sx.paginationContainer}>
-        <FormControl size="small">
-          <Select
-            value={perPage}
-            onChange={(e) => goToPage({ page: 1, perPage: e.target.value })}
-          >
-            {[5, 10, 25, 50].map(e => <MenuItem key={e} value={e}>{e}</MenuItem>)}
-          </Select>
-        </FormControl>
-        <Pagination
-          page={page}
-          count={Math.ceil((totalPage > 5000 ? 5000 : totalPage) / perPage)}
-          onChange={(e, value) => goToPage({ page: value, perPage })}
-          renderItem={(item) => <PaginationItem {...item} />}
-        />
       </Box>
     </Box>
   )

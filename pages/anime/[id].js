@@ -1,7 +1,3 @@
-const page = () => {
-  return (
-    <>Anime Detail Page</>
-  );
-}
+import AnimeDetail from "src/pages-groups/anime/anime-detail";
 
-export default page;
+export default AnimeDetail;
