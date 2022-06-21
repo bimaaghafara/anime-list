@@ -17,6 +17,8 @@ export const AnimeListSchema = gql`
           native
         }
         id
+        bannerImage
+        description
       }
     }
   }
