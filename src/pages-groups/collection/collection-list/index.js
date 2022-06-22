@@ -21,31 +21,58 @@ import useDialog from "src/hooks/useDialog";
 
 // styles
 import sx from './styles';
+import { useState } from "react";
+import { Collections } from "@mui/icons-material";
 
 const CollectionList = () => {
   const router = useRouter();
   const dialog = useDialog();
+  const [dialogCollection, setDialogCollection] = useState();
   const {
     getCollections,
+    addCollection,
     // setCollections,
     // getCollectionByName,
     // setCollection,
     // isValidName
   } = useCollection();
 
+  // Add actions
+  const handleSubmitAddNew = () => console.log('Add', dialogCollection);
   const handleOpenAddNew = () => {
+    setDialogCollection(null);
     dialog.setTitle('Add New Collection');
     dialog.open();
+    dialog.setType("add");
   }
 
-  const handleOpenEdit = () => {
+  // Edit Actions
+  const handleSubmitEdit = () => console.log('Edit', dialogCollection);
+  const handleOpenEdit = (collection) => {
+    setDialogCollection(collection);
     dialog.setTitle('Edit Collection');
     dialog.open();
+    dialog.setType("edit");
   }
 
-  const handleOpenDelete = () => {
+  // Delete Actions
+  const handleSubmitDelete = () => console.log('Delete', dialogCollection);
+  const handleOpenDelete = (collection) => {
+    setDialogCollection(collection);
     dialog.setTitle('Delete Collection');
     dialog.open();
+    dialog.setType("delete");
+  }
+
+  const handleSubmit = () => {
+    if (dialog.type === "add") {
+      handleSubmitAddNew();
+    } else if (dialog.type === "edit") {
+      handleSubmitEdit();
+    } else {
+      handleSubmitDelete();
+    }
+    dialog.close();
   }
 
   return (
@@ -64,10 +91,10 @@ const CollectionList = () => {
           >
             {collection.name}
           </Typography>
-          <IconButton sx={sx.addNew} onClick={handleOpenDelete}>
+          <IconButton sx={sx.addNew} onClick={() => handleOpenDelete(collection)}>
             <DeleteIcon />
           </IconButton>
-          <IconButton sx={sx.addNew} onClick={handleOpenEdit}>
+          <IconButton sx={sx.addNew} onClick={() => handleOpenEdit(collection)}>
             <EditIcon />
           </IconButton>
           {!(collection?.animes?.length) && <Box sx={sx.noCollection}>-</Box>}
@@ -100,7 +127,7 @@ const CollectionList = () => {
           <Button variant="outlined" onClick={dialog.close}>
             Cancel
           </Button>
-          <Button variant="contained" onClick={dialog.close} autoFocus>
+          <Button variant="contained" onClick={handleSubmit} autoFocus>
             Submit
           </Button>
         </DialogActions>
