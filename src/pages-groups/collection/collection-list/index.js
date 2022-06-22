@@ -44,16 +44,60 @@ const CollectionList = () => {
     // setCollection,
   } = useCollection();
 
-  // Add actions
-  const handleSubmitAddNew = () => {
-    if (!dialogCollection?.name || !isValidName(dialogCollection?.name)) {
+  const isValidRequiredCollectionName = () => {
+    const valid = dialogCollection?.name;
+    if (!valid) {
       setSnackbar({
         open: true,
         severity: 'error',
-        message: 'Collection name is required & must be unique!'
+        message: 'Collection name is required!'
       });
-      return;
     }
+    return valid;
+  }
+
+  const isValidUniqueCollectionName = () => {
+    const valid = isValidName(dialogCollection?.name);
+    if (!valid) {
+      setSnackbar({
+        open: true,
+        severity: 'error',
+        message: 'Collection name should be unique!'
+      });
+    }
+    return valid;
+  }
+
+  const isValidSpecialCHarsCollectionName = () => {
+    const format = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+    const valid = !format.test(dialogCollection?.name);
+    if (!valid) {
+      setSnackbar({
+        open: true,
+        severity: 'error',
+        message: 'Collection name is should not have special characters!'
+      });
+    }
+    return valid;
+  }
+
+  const isValidDifferentCollectionName = () => {
+    const valid = prevDialogCollectionName.toLowerCase() != dialogCollection?.name.toLowerCase();
+    if (!valid) {
+      setSnackbar({
+        open: true,
+        severity: 'error',
+        message: 'Collection name should be different with the previous one!'
+      });
+    }
+    return valid;
+  }
+
+  // Add actions
+  const handleSubmitAddNew = () => {
+    if (!isValidRequiredCollectionName()) return;
+    if (!isValidUniqueCollectionName()) return;
+    if (!isValidSpecialCHarsCollectionName()) return;
     addCollection(dialogCollection);
     dialog.close();
     setSnackbar({
@@ -71,22 +115,10 @@ const CollectionList = () => {
 
   // Edit Actions
   const handleSubmitEdit = () => {
-    if (prevDialogCollectionName === dialogCollection?.name) {
-      setSnackbar({
-        open: true,
-        severity: 'error',
-        message: 'Collection name must be different with the previous one!'
-      });
-      return;
-    }
-    if (!dialogCollection?.name || !isValidName(dialogCollection?.name)) {
-      setSnackbar({
-        open: true,
-        severity: 'error',
-        message: 'Collection name is required & must be unique!'
-      });
-      return;
-    }
+    if (!isValidDifferentCollectionName()) return;
+    if (!isValidRequiredCollectionName()) return;
+    if (!isValidUniqueCollectionName()) return;
+    if (!isValidSpecialCHarsCollectionName()) return;
     editCollection(prevDialogCollectionName, dialogCollection);
     dialog.close();
     setSnackbar({
