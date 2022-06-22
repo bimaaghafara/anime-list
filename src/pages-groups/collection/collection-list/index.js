@@ -13,7 +13,7 @@ import {
   DialogActions,
   IconButton,
   Alert,
-  AlertTitle,
+  Snackbar
 } from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -32,7 +32,7 @@ const CollectionList = () => {
   const dialog = useDialog();
   const [prevDialogCollectionName, setPrevDialogCollectionName] = useState();
   const [dialogCollection, setDialogCollection] = useState();
-  const [errorMessage, setErrorMessage] = useState();
+  const [snackbar, setSnackbar] = useState();
   const {
     isValidName,
     getCollections,
@@ -47,14 +47,22 @@ const CollectionList = () => {
   // Add actions
   const handleSubmitAddNew = () => {
     if (!dialogCollection?.name || !isValidName(dialogCollection?.name)) {
-      setErrorMessage('Collection name is required & must be unique!')
+      setSnackbar({
+        open: true,
+        severity: 'error',
+        message: 'Collection name is required & must be unique!'
+      });
       return;
     }
     addCollection(dialogCollection);
     dialog.close();
+    setSnackbar({
+      open: true,
+      severity: 'success',
+      message: 'Succes add new collection!'
+    });
   };
   const handleOpenAddNew = () => {
-    setErrorMessage();
     setDialogCollection(null);
     dialog.setTitle('Add New Collection');
     dialog.open();
@@ -64,19 +72,31 @@ const CollectionList = () => {
   // Edit Actions
   const handleSubmitEdit = () => {
     if (prevDialogCollectionName === dialogCollection?.name) {
-      setErrorMessage('Collection name must be different with the previous one!');
+      setSnackbar({
+        open: true,
+        severity: 'error',
+        message: 'Collection name must be different with the previous one!'
+      });
       return;
     }
     if (!dialogCollection?.name || !isValidName(dialogCollection?.name)) {
-      setErrorMessage('Collection name is required & must be unique!')
+      setSnackbar({
+        open: true,
+        severity: 'error',
+        message: 'Collection name is required & must be unique!'
+      });
       return;
     }
     editCollection(prevDialogCollectionName, dialogCollection);
     dialog.close();
+    setSnackbar({
+      open: true,
+      severity: 'success',
+      message: 'Succes edit collection!'
+    });
   }
   const handleOpenEdit = (collection) => {
     setPrevDialogCollectionName(collection?.name);
-    setErrorMessage();
     setDialogCollection(collection);
     dialog.setTitle('Edit Collection');
     dialog.open();
@@ -87,9 +107,13 @@ const CollectionList = () => {
   const handleSubmitDelete = () => {
     deleteCollection(dialogCollection?.name);
     dialog.close();
+    setSnackbar({
+      open: true,
+      severity: 'success',
+      message: 'Succes delete collection!'
+    });
   };
   const handleOpenDelete = (collection) => {
-    setErrorMessage();
     setDialogCollection(collection);
     dialog.setTitle('Delete Collection');
     dialog.open();
@@ -120,12 +144,6 @@ const CollectionList = () => {
             label="Collection Name"
             variant="outlined"
           />
-          {errorMessage && (
-            <Alert sx={{ mt: 2 }} severity="error">
-              <AlertTitle>Error</AlertTitle>
-              <Typography variant="subtitle2">{errorMessage}</Typography>
-            </Alert>
-          )}
         </Box>
       );
     return (
@@ -187,6 +205,18 @@ const CollectionList = () => {
           </Button>
         </DialogActions>
       </Dialog>
+      <Snackbar
+        open={snackbar?.open}
+        autoHideDuration={5000}
+        onClose={() => setSnackbar()}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      >
+        {snackbar?.open && (
+          <Alert onClose={() => setSnackbar()} severity={snackbar?.severity} sx={{ width: '100%' }}>
+            {snackbar?.message}
+          </Alert>
+        )}
+      </Snackbar>
     </Box>
   )
 }
