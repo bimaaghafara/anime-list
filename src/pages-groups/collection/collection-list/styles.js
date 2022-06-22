@@ -1,6 +1,9 @@
 const itemsCount = (n) => `calc(100% / ${n})`;
 
 const sx = {
+  root: {
+    padding: '12px'
+  },
   content: {
     maxWidth: '1200px',
     margin: 'auto',

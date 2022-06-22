@@ -183,71 +183,73 @@ const CollectionList = () => {
   }
 
   return (
-    <Box sx={sx.content}>
-      <Typography variant="h5" sx={sx.collectionsTitle}>Collections</Typography>
-      <Button variant="contained" sx={sx.addNew} onClick={handleOpenAddNew}>
-        Add New
-      </Button>
-      <hr />
-      {getCollections().map(collection => (
-        <Box key={collection.name}>
-          <Typography
-            variant="h6"
-            sx={sx.collectionName}
-            onClick={() => router.push(`/collection/${collection.name}`)}
-          >
-            {collection.name}
-          </Typography>
-          <IconButton sx={sx.addNew} onClick={() => handleOpenDelete(collection)}>
-            <DeleteIcon />
-          </IconButton>
-          <IconButton sx={sx.addNew} onClick={() => handleOpenEdit(collection)}>
-            <EditIcon />
-          </IconButton>
-          {!(collection?.animes?.length) && <Box sx={sx.noCollection}>-</Box>}
-          <Box>
-              {collection?.animes?.map((e, i) => (
-                <Box key={i} sx={sx.anime}>
-                  <Box sx={sx.animeIamge(e.coverImage.large)} />
-                  <Typography>{e.title.english}</Typography>
-                  <Typography>{e.title.native}</Typography>
-                </Box>
-              ))}
+    <Box sx={sx.root}>
+      <Box sx={sx.content}>
+        <Typography variant="h5" sx={sx.collectionsTitle}>Collections</Typography>
+        <Button variant="contained" sx={sx.addNew} onClick={handleOpenAddNew}>
+          Add New
+        </Button>
+        <hr />
+        {getCollections().map(collection => (
+          <Box key={collection.name}>
+            <Typography
+              variant="h6"
+              sx={sx.collectionName}
+              onClick={() => router.push(`/collection/${collection.name}`)}
+            >
+              {collection.name}
+            </Typography>
+            <IconButton sx={sx.addNew} onClick={() => handleOpenDelete(collection)}>
+              <DeleteIcon />
+            </IconButton>
+            <IconButton sx={sx.addNew} onClick={() => handleOpenEdit(collection)}>
+              <EditIcon />
+            </IconButton>
+            {!(collection?.animes?.length) && <Box sx={sx.noCollection}>-</Box>}
+            <Box>
+                {collection?.animes?.map((e, i) => (
+                  <Box key={i} sx={sx.anime}>
+                    <Box sx={sx.animeIamge(e.coverImage.large)} />
+                    <Typography>{e.title.english}</Typography>
+                    <Typography>{e.title.native}</Typography>
+                  </Box>
+                ))}
+            </Box>
+            <hr />
           </Box>
-          <hr />
-        </Box>
-      ))}
-      <Dialog
-        open={dialog.isOpen}
-        onClose={dialog.close}
-      >
-        <DialogTitle>
-          {dialog.title}
-        </DialogTitle>
-        <DialogContent sx={sx.dialogContent}>
-          {renderDialogContent()}
-        </DialogContent>
-        <DialogActions>
-          <Button variant="outlined" onClick={dialog.close}>
-            Cancel
-          </Button>
-          <Button variant="contained" onClick={handleSubmit} autoFocus>
-            Submit
-          </Button>
-        </DialogActions>
-      </Dialog>
-      <Snackbar
-        open={snackbar?.open}
-        autoHideDuration={5000}
-        onClose={() => setSnackbar()}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-      >
-        {snackbar?.open && (
-          <Alert onClose={() => setSnackbar()} severity={snackbar?.severity} sx={{ width: '100%' }}>
-            {snackbar?.message}
-          </Alert>
-        )}
-      </Snackbar>
+        ))}
+        <Dialog
+          open={dialog.isOpen}
+          onClose={dialog.close}
+        >
+          <DialogTitle>
+            {dialog.title}
+          </DialogTitle>
+          <DialogContent sx={sx.dialogContent}>
+            {renderDialogContent()}
+          </DialogContent>
+          <DialogActions>
+            <Button variant="outlined" onClick={dialog.close}>
+              Cancel
+            </Button>
+            <Button variant="contained" onClick={handleSubmit} autoFocus>
+              Submit
+            </Button>
+          </DialogActions>
+        </Dialog>
+        <Snackbar
+          open={snackbar?.open}
+          autoHideDuration={5000}
+          onClose={() => setSnackbar()}
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+        >
+          {snackbar?.open && (
+            <Alert onClose={() => setSnackbar()} severity={snackbar?.severity} sx={{ width: '100%' }}>
+              {snackbar?.message}
+            </Alert>
+          )}
+        </Snackbar>
+      </Box>
     </Box>
   )
 }
