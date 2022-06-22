@@ -25,7 +25,7 @@ const useCollection = () => {
   // }
 
   // check if collection name is unique
-  const isValidName = (value) => !getCollections().find(e => e.name === value);
+  const isUniqueName = (value) => !getCollections().find(e => e.name === value);
 
   return {
     getCollections,
@@ -35,7 +35,7 @@ const useCollection = () => {
     editCollection,
     deleteCollection,
     // addAnimeToCollection,
-    isValidName
+    isUniqueName
   }
 }
 

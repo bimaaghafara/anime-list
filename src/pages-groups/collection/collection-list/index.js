@@ -25,7 +25,6 @@ import useDialog from "src/hooks/useDialog";
 // styles
 import sx from './styles';
 import { useState } from "react";
-import { Collections } from "@mui/icons-material";
 
 const CollectionList = () => {
   const router = useRouter();
@@ -34,7 +33,7 @@ const CollectionList = () => {
   const [dialogCollection, setDialogCollection] = useState();
   const [snackbar, setSnackbar] = useState();
   const {
-    isValidName,
+    isUniqueName,
     getCollections,
     addCollection,
     editCollection,
@@ -57,7 +56,7 @@ const CollectionList = () => {
   }
 
   const isValidUniqueCollectionName = () => {
-    const valid = isValidName(dialogCollection?.name);
+    const valid = isUniqueName(dialogCollection?.name);
     if (!valid) {
       setSnackbar({
         open: true,
