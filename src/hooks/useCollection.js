@@ -10,6 +10,11 @@ const useCollection = () => {
   // collection
   // const getCollection = (value) => getCollections().find(e => e.name === value);
   const addCollection = (value) => addCollections([...getCollections(), value]);
+  const editCollection = (currentName, collection) => addCollections(
+    getCollections().map(e => ({
+      ...e,
+      ...(e.name === currentName && collection)
+    })));
   const deleteCollection = (name) => addCollections(getCollections().filter(e => e.name != name));
   // const addAnimeToCollection = (collectionName, value) => {
   //   const currentCollection = getCollection(collectionName);
@@ -27,6 +32,7 @@ const useCollection = () => {
     addCollections,
     // getCollection,
     addCollection,
+    editCollection,
     deleteCollection,
     // addAnimeToCollection,
     isValidName

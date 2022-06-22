@@ -30,12 +30,14 @@ import { Collections } from "@mui/icons-material";
 const CollectionList = () => {
   const router = useRouter();
   const dialog = useDialog();
+  const [prevDialogCollectionName, setPrevDialogCollectionName] = useState();
   const [dialogCollection, setDialogCollection] = useState();
   const [errorMessage, setErrorMessage] = useState();
   const {
     isValidName,
     getCollections,
     addCollection,
+    editCollection,
     deleteCollection,
     // setCollections,
     // getCollectionByName,
@@ -44,12 +46,12 @@ const CollectionList = () => {
 
   // Add actions
   const handleSubmitAddNew = () => {
-    if(dialogCollection?.name && isValidName(dialogCollection?.name)) {
-      addCollection(dialogCollection);
-      dialog.close();
-    } else {
+    if (!dialogCollection?.name || !isValidName(dialogCollection?.name)) {
       setErrorMessage('Collection name is required & must be unique!')
+      return;
     }
+    addCollection(dialogCollection);
+    dialog.close();
   };
   const handleOpenAddNew = () => {
     setErrorMessage();
@@ -60,8 +62,20 @@ const CollectionList = () => {
   }
 
   // Edit Actions
-  const handleSubmitEdit = () => console.log('Edit', dialogCollection);
+  const handleSubmitEdit = () => {
+    if (prevDialogCollectionName === dialogCollection?.name) {
+      setErrorMessage('Collection name must be different with the previous one!');
+      return;
+    }
+    if (!dialogCollection?.name || !isValidName(dialogCollection?.name)) {
+      setErrorMessage('Collection name is required & must be unique!')
+      return;
+    }
+    editCollection(prevDialogCollectionName, dialogCollection);
+    dialog.close();
+  }
   const handleOpenEdit = (collection) => {
+    setPrevDialogCollectionName(collection?.name);
     setErrorMessage();
     setDialogCollection(collection);
     dialog.setTitle('Edit Collection');
