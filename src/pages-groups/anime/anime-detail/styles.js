@@ -94,9 +94,16 @@ const sx = {
     color: '#777',
     fontSize: '14px'
   },
+  collectionChip: {
+    display: 'inline-block',
+    marginTop: '8px',
+    marginRight: '8px',
+    '& .MuiChip-label': {
+      lineHeight: '27px'
+    }
+  },
   charactersTitle: {
     fontSize: '24px',
-    paddingLeft: '12px'
   },
   noCharacters: {
     paddingLeft: '12px'

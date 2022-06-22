@@ -8,12 +8,15 @@ import {
   Typography,
   Grid,
   Paper,
-  Button
+  Button,
+  Stack,
+  Chip
 } from '@mui/material';
 import CollectionDialog from 'src/components/collection-dialog';
 import AddIcon from '@mui/icons-material/Add';
 
 // hooks
+import useCollection from "src/hooks/useCollection";
 import useDialog from "src/hooks/useDialog";
 
 // styles
@@ -31,11 +34,13 @@ const AnimeDetail = () => {
     { id: Number(router?.query?.id || 0) },
     { enabled: router?.isReady }
   );
+  const { getCollections } = useCollection();
 
   if ( error ) return <div className='loader'>Error!</div>;
   if ( isLoading || !data ) return <div className='loader'>Loading . . .</div>;
 
   const anime = data?.Media;
+  const collections = getCollections().filter(e => e?.animes?.find(a => a.id === anime?.id));
 
   const leftDetails = [
     { value: anime?.format, text: anime?.format, label: 'Format' },
@@ -106,6 +111,19 @@ const AnimeDetail = () => {
             </Paper>
           </Grid>
           <Grid item xs={12} sm={8} md={9}>
+            <Paper sx={{ p: 2, mb: '16px' }}>
+              <Typography sx={sx.charactersTitle}>Collections</Typography>
+              <Box>
+                {collections.map(c => (
+                  <Chip
+                    sx={sx.collectionChip}
+                    label={c.name}
+                    variant="outlined"
+                    onClick={() => router.push(`/collection/${c.name}`)} 
+                  />
+                ))}
+              </Box>
+            </Paper>
             <Paper sx={{ p: 2, textAlign: 'center' }}>
               <Typography sx={sx.charactersTitle}>Characters</Typography>
               {!characters?.length && <Typography sx={sx.noCharacters}>Not available.</Typography>}
