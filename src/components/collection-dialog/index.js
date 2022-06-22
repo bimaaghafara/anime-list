@@ -25,6 +25,7 @@ const CollectionDialog = ({
   dialogCollection,
   setDialogCollection,
   prevDialogCollectionName,
+  onSuccess = () => {},
 }) => {
   const [snackbar, setSnackbar] = useState();
   const {
@@ -114,6 +115,7 @@ const CollectionDialog = ({
       severity: 'success',
       message: 'Succes add new collection!'
     });
+    onSuccess();
   };
 
   const handleSubmitEdit = () => {
@@ -128,6 +130,7 @@ const CollectionDialog = ({
       severity: 'success',
       message: 'Succes edit collection!'
     });
+    onSuccess();
   }
 
   const handleSubmitDelete = () => {
@@ -138,6 +141,7 @@ const CollectionDialog = ({
       severity: 'success',
       message: 'Succes delete collection!'
     });
+    onSuccess();
   };
 
   const handleSubmit = () => {
