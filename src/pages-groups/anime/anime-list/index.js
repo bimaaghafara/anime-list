@@ -11,7 +11,7 @@ import {
   Select,
   MenuItem
 } from '@mui/material';
-import { AnimeCard } from './components/anime-card';
+import { AnimeCard } from 'src/components/anime-card';
 
 // styles
 import sx from './styles';

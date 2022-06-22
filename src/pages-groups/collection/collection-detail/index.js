@@ -16,7 +16,7 @@ import {
 } from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { AnimeCard } from "src/pages-groups/anime/anime-list/components/anime-card";
+import { AnimeCard } from 'src/components/anime-card';
 
 // hooks
 import useCollection from 'src/hooks/useCollection';
