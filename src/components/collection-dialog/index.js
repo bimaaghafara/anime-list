@@ -28,15 +28,16 @@ const CollectionDialog = ({
   prevDialogCollectionName,
   onSuccess = () => {},
   animes = [],
+  dialogAnime,
 }) => {
   const [snackbar, setSnackbar] = useState();
   const {
     getCollections,
-    isUniqueName,
     addCollection,
     editCollection,
     deleteCollection,
     addAnimesToCollection,
+    deleteAnimeFromCollection,
   } = useCollection();
   const renderDialogContent = () => {
     if (dialog.type === "add" || dialog.type === "edit") {
@@ -60,23 +61,28 @@ const CollectionDialog = ({
         <Box>Are you sure to delete collection &quot;{dialogCollection?.name}&quot;?</Box>
       );
     }
-    return (
-      <Box>
+    if (dialog.type === "addAnime") {
+      return (
         <Box>
-          <Autocomplete
-              sx={{ mt: 1 }}
-              value={dialogCollection}
-              onChange={(e, newValue) => {
-                setDialogCollection(newValue);
-              }}
-              options={(getCollections() || []).map(e => ({
-                ...e, label: e.name
-              }))}
-              isOptionEqualToValue={(option, value) => option.name === value.name}
-              renderInput={(params) => <TextField {...params} label="Collection" />}
-            />
-          </Box>
-      </Box>
+          <Box>
+            <Autocomplete
+                sx={{ mt: 1 }}
+                value={dialogCollection}
+                onChange={(e, newValue) => {
+                  setDialogCollection(newValue);
+                }}
+                options={(getCollections() || []).map(e => ({
+                  ...e, label: e.name
+                }))}
+                isOptionEqualToValue={(option, value) => option.name === value.name}
+                renderInput={(params) => <TextField {...params} label="Collection" />}
+              />
+            </Box>
+        </Box>
+      );
+    }
+    return (
+      <Box>Are you sure to delete this anime from collection?</Box>
     );
   }
 
@@ -93,7 +99,7 @@ const CollectionDialog = ({
   }
 
   const isValidUniqueCollectionName = () => {
-    const valid = isUniqueName(dialogCollection?.name);
+    const valid = !getCollections().find(e => e.name === dialogCollection?.name)
     if (!valid) {
       setSnackbar({
         open: true,
@@ -170,13 +176,23 @@ const CollectionDialog = ({
   };
 
   const handleSubmitAddAnimeToCollection = () => {
-    if(!(dialogCollection?.name)) return;
+    if (!isValidRequiredCollectionName()) return;
     addAnimesToCollection(dialogCollection?.name, animes);
     dialog.close();
     setSnackbar({
       open: true,
       severity: 'success',
       message: 'Succes add anime to collection!'
+    });
+  }
+
+  const handleSubmitDeleteAnimeFromCollection = () => {
+    deleteAnimeFromCollection(dialogCollection?.name, dialogAnime?.id);
+    dialog.close();
+    setSnackbar({
+      open: true,
+      severity: 'success',
+      message: 'Succes delete anime from collection!'
     });
   }
 
@@ -187,8 +203,10 @@ const CollectionDialog = ({
       handleSubmitEdit();
     } else if (dialog.type === "delete") {
       handleSubmitDelete();
-    } else {
+    } else if (dialog.type === "addAnime") {
       handleSubmitAddAnimeToCollection();
+    } else {
+      handleSubmitDeleteAnimeFromCollection();
     }
   }
 

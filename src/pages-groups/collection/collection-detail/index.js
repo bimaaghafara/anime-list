@@ -36,6 +36,7 @@ const CollectionDetail = () => {
   const dialog = useDialog();
   const [prevDialogCollectionName, setPrevDialogCollectionName] = useState();
   const [dialogCollection, setDialogCollection] = useState();
+  const [dialogAnime, setDialogAnime] = useState();
 
   const handleOpenEdit = () => {
     setPrevDialogCollectionName(collection?.name);
@@ -43,6 +44,15 @@ const CollectionDetail = () => {
     dialog.setTitle('Edit Collection');
     dialog.open();
     dialog.setType("edit");
+  }
+
+  const handleOpenDeleteAnime = (anime) => {
+    setDialogAnime(anime);
+    setPrevDialogCollectionName(collection?.name);
+    setDialogCollection(collection);
+    dialog.setTitle('Delete Anime from Collection');
+    dialog.open();
+    dialog.setType("deleteAnime");
   }
 
   return (
@@ -58,7 +68,10 @@ const CollectionDetail = () => {
         )}
         {collection?.animes?.map((anime) => 
           <Box key={anime.id} sx={sx.animeCard}>
-            <IconButton sx={sx.delete} onClick={() => console.log(anime)}>
+            <IconButton
+              sx={sx.delete}
+              onClick={() => handleOpenDeleteAnime(anime)}
+            >
               <DeleteIcon />
             </IconButton>
             <AnimeCard
@@ -74,6 +87,7 @@ const CollectionDetail = () => {
       <CollectionDialog
         dialog={dialog}
         dialogCollection={dialogCollection}
+        dialogAnime={dialogAnime}
         setDialogCollection={setDialogCollection}
         prevDialogCollectionName={prevDialogCollectionName}
         onSuccess={() => router.push(`/collection/${dialogCollection.name}`)}

@@ -16,6 +16,8 @@ const useCollection = () => {
       ...(e.name === currentName && collection)
     })));
   const deleteCollection = (name) => addCollections(getCollections().filter(e => e.name != name));
+  
+  // anime in collection
   const addAnimesToCollection = (collectionName, animes) => {
     const currentCollection = getCollection(collectionName);
     const newCollection = {
@@ -25,9 +27,14 @@ const useCollection = () => {
     }
     editCollection(collectionName, newCollection);
   }
-
-  // check if collection name is unique
-  const isUniqueName = (value) => !getCollections().find(e => e.name === value);
+  const deleteAnimeFromCollection = (collectionName, animeId) => {
+    const currentCollection = getCollection(collectionName);
+    const newCollection = {
+      ...currentCollection,
+      animes: currentCollection.animes.filter(anime => anime.id !== animeId)
+    }
+    editCollection(collectionName, newCollection);
+  }
 
   return {
     getCollections,
@@ -37,7 +44,7 @@ const useCollection = () => {
     editCollection,
     deleteCollection,
     addAnimesToCollection,
-    isUniqueName
+    deleteAnimeFromCollection,
   }
 }
 

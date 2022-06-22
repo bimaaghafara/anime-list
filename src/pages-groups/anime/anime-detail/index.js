@@ -106,7 +106,7 @@ const AnimeDetail = () => {
             </Paper>
           </Grid>
           <Grid item xs={12} sm={8} md={9}>
-            <Paper sx={{ p: 2 }}>
+            <Paper sx={{ p: 2, textAlign: 'center' }}>
               <Typography sx={sx.charactersTitle}>Characters</Typography>
               {!characters?.length && <Typography sx={sx.noCharacters}>Not available.</Typography>}
               <Box>
