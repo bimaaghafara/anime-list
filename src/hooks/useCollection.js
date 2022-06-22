@@ -8,11 +8,11 @@ const useCollection = () => {
   const addCollections = (value) => setItem(COLLECTIONS, value);
 
   // collection
-  // const getCollectionByName = (value) => getCollections().find(e => e.name === value);
+  // const getCollection = (value) => getCollections().find(e => e.name === value);
   const addCollection = (value) => addCollections([...getCollections(), value]);
-  // const removeCollectionByName = (value) => addCollections(getCollections().filter(e => e.name != value));
+  const deleteCollection = (name) => addCollections(getCollections().filter(e => e.name != name));
   // const addAnimeToCollection = (collectionName, value) => {
-  //   const currentCollection = getCollectionByName(collectionName);
+  //   const currentCollection = getCollection(collectionName);
   //   const newCollection = {
   //     ...currentCollection,
   //     anime: (currentCollection?.anime || []).push(value)
@@ -20,16 +20,16 @@ const useCollection = () => {
   // }
 
   // check if collection name is unique
-  // const isValidName = (value) => !getCollections().find(e => e.name === value);
+  const isValidName = (value) => !getCollections().find(e => e.name === value);
 
   return {
     getCollections,
     addCollections,
-    // getCollectionByName,
+    // getCollection,
     addCollection,
-    // removeCollectionByName,
+    deleteCollection,
     // addAnimeToCollection,
-    // isValidName
+    isValidName
   }
 }
 

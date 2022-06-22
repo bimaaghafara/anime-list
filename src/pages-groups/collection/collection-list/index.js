@@ -4,13 +4,16 @@ import { useRouter } from "next/router";
 // components
 import {
   Box,
+  TextField,
   Typography,
   Button,
   Dialog,
   DialogTitle,
   DialogContent,
   DialogActions,
-  IconButton
+  IconButton,
+  Alert,
+  AlertTitle,
 } from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -28,18 +31,28 @@ const CollectionList = () => {
   const router = useRouter();
   const dialog = useDialog();
   const [dialogCollection, setDialogCollection] = useState();
+  const [errorMessage, setErrorMessage] = useState();
   const {
+    isValidName,
     getCollections,
     addCollection,
+    deleteCollection,
     // setCollections,
     // getCollectionByName,
     // setCollection,
-    // isValidName
   } = useCollection();
 
   // Add actions
-  const handleSubmitAddNew = () => console.log('Add', dialogCollection);
+  const handleSubmitAddNew = () => {
+    if(dialogCollection?.name && isValidName(dialogCollection?.name)) {
+      addCollection(dialogCollection);
+      dialog.close();
+    } else {
+      setErrorMessage('Collection name is required & must be unique!')
+    }
+  };
   const handleOpenAddNew = () => {
+    setErrorMessage();
     setDialogCollection(null);
     dialog.setTitle('Add New Collection');
     dialog.open();
@@ -49,6 +62,7 @@ const CollectionList = () => {
   // Edit Actions
   const handleSubmitEdit = () => console.log('Edit', dialogCollection);
   const handleOpenEdit = (collection) => {
+    setErrorMessage();
     setDialogCollection(collection);
     dialog.setTitle('Edit Collection');
     dialog.open();
@@ -56,8 +70,12 @@ const CollectionList = () => {
   }
 
   // Delete Actions
-  const handleSubmitDelete = () => console.log('Delete', dialogCollection);
+  const handleSubmitDelete = () => {
+    deleteCollection(dialogCollection?.name);
+    dialog.close();
+  };
   const handleOpenDelete = (collection) => {
+    setErrorMessage();
     setDialogCollection(collection);
     dialog.setTitle('Delete Collection');
     dialog.open();
@@ -72,7 +90,33 @@ const CollectionList = () => {
     } else {
       handleSubmitDelete();
     }
-    dialog.close();
+  }
+
+  const renderDialogContent = () => {
+    if (dialog.type === "add" || dialog.type === "edit")
+      return (
+        <Box sx={{ padding: '12px 0'}}>
+          <TextField
+            value={dialogCollection?.name || ''}
+            onChange={e => setDialogCollection({
+              ...dialogCollection,
+              name: e.target.value
+            })}
+            fullWidth
+            label="Collection Name"
+            variant="outlined"
+          />
+          {errorMessage && (
+            <Alert sx={{ mt: 2 }} severity="error">
+              <AlertTitle>Error</AlertTitle>
+              <Typography variant="subtitle2">{errorMessage}</Typography>
+            </Alert>
+          )}
+        </Box>
+      );
+    return (
+      <Box>Are you sure to delete collection &quot;{dialogCollection?.name}&quot;?</Box>
+    );
   }
 
   return (
@@ -117,11 +161,8 @@ const CollectionList = () => {
         <DialogTitle>
           {dialog.title}
         </DialogTitle>
-        <DialogContent>
-          <Box>
-            Let Google help apps determine location. This means sending anonymous
-            location data to Google, even when no apps are running.
-          </Box>
+        <DialogContent sx={sx.dialogContent}>
+          {renderDialogContent()}
         </DialogContent>
         <DialogActions>
           <Button variant="outlined" onClick={dialog.close}>

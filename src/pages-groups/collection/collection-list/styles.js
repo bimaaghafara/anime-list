@@ -45,6 +45,10 @@ const sx = {
     paddingBottom: '100%',
     marginBottom: '8px'
   }),
+  dialogContent: {
+    width: '500px',
+    maxWidth: '80vw'
+  }
 }
 
 export default sx;
