@@ -80,15 +80,6 @@ const AnimeDetail = () => {
       <Box sx={sx.bannerImage} component="img" src={anime?.bannerImage} />
       <Box sx={sx.content}>
         <Box sx={sx.headerContainer}>
-          <Box sx={sx.addToCollection}>
-            <Button
-              variant="contained"
-              startIcon={<AddIcon />}
-              onClick={handleOpenAddAnimeToCollection}
-            >
-              Collection
-            </Button>
-          </Box>
           <Box sx={sx.headerImage} component="img" src={anime?.coverImage?.large} />
           <Box sx={sx.headerRight}>
             <Box sx={sx.titleContainer}>
@@ -113,6 +104,14 @@ const AnimeDetail = () => {
           <Grid item xs={12} sm={8} md={9}>
             <Paper sx={{ p: 2, mb: '16px' }}>
               <Typography sx={sx.charactersTitle}>Collections</Typography>
+              <Button
+                size="small"
+                variant="contained"
+                sx={sx.addNew}
+                onClick={handleOpenAddAnimeToCollection}
+              >
+                Add New
+              </Button>
               <Box>
                 {collections.map(c => (
                   <Chip

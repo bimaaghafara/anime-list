@@ -13,18 +13,6 @@ const sx = {
   headerContainer: {
     marginBottom: '16px',
   },
-  addToCollection: {
-    position: 'absolute',
-    left: {
-      xs: '50%',
-      sm: '116px',
-    },
-    transform: 'translate(-50%, 16px)',
-    '& button': {
-      textTransform: 'none',
-      width: '168px'
-    }
-  },
   headerImage: {
     display: {
       xs: 'block',
@@ -104,6 +92,10 @@ const sx = {
   },
   charactersTitle: {
     fontSize: '24px',
+    display: 'inline-block',
+  },
+  addNew: {
+    float: 'right',
   },
   noCharacters: {
     paddingLeft: '12px'
