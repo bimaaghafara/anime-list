@@ -27,6 +27,7 @@ const CollectionDialog = ({
   setDialogCollection,
   prevDialogCollectionName,
   onSuccess = () => {},
+  animes = [],
 }) => {
   const [snackbar, setSnackbar] = useState();
   const {
@@ -35,6 +36,7 @@ const CollectionDialog = ({
     addCollection,
     editCollection,
     deleteCollection,
+    addAnimesToCollection,
   } = useCollection();
   const renderDialogContent = () => {
     if (dialog.type === "add" || dialog.type === "edit") {
@@ -53,28 +55,28 @@ const CollectionDialog = ({
         </Box>
       );
     }
-    if (dialog.type === "addAnime") {
+    if (dialog.type === "delete") {
       return (
-        <Box>
-          <Box>
-            <Autocomplete
-                sx={{ mt: 1 }}
-                value={dialogCollection}
-                onChange={(e, newValue) => {
-                  setDialogCollection(newValue);
-                }}
-                options={(getCollections() || []).map(e => ({
-                  ...e, label: e.name
-                }))}
-                isOptionEqualToValue={(option, value) => option.name === value.name}
-                renderInput={(params) => <TextField {...params} label="Collection" />}
-              />
-            </Box>
-        </Box>
+        <Box>Are you sure to delete collection &quot;{dialogCollection?.name}&quot;?</Box>
       );
     }
     return (
-      <Box>Are you sure to delete collection &quot;{dialogCollection?.name}&quot;?</Box>
+      <Box>
+        <Box>
+          <Autocomplete
+              sx={{ mt: 1 }}
+              value={dialogCollection}
+              onChange={(e, newValue) => {
+                setDialogCollection(newValue);
+              }}
+              options={(getCollections() || []).map(e => ({
+                ...e, label: e.name
+              }))}
+              isOptionEqualToValue={(option, value) => option.name === value.name}
+              renderInput={(params) => <TextField {...params} label="Collection" />}
+            />
+          </Box>
+      </Box>
     );
   }
 
@@ -167,13 +169,26 @@ const CollectionDialog = ({
     onSuccess();
   };
 
+  const handleSubmitAddAnimeToCollection = () => {
+    if(!(dialogCollection?.name)) return;
+    addAnimesToCollection(dialogCollection?.name, animes);
+    dialog.close();
+    setSnackbar({
+      open: true,
+      severity: 'success',
+      message: 'Succes add anime to collection!'
+    });
+  }
+
   const handleSubmit = () => {
     if (dialog.type === "add") {
       handleSubmitAddNew();
     } else if (dialog.type === "edit") {
       handleSubmitEdit();
-    } else {
+    } else if (dialog.type === "delete") {
       handleSubmitDelete();
+    } else {
+      handleSubmitAddAnimeToCollection();
     }
   }
 

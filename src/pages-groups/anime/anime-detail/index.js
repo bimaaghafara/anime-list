@@ -127,6 +127,7 @@ const AnimeDetail = () => {
         dialogCollection={dialogCollection}
         setDialogCollection={setDialogCollection}
         prevDialogCollectionName={prevDialogCollectionName}
+        animes={[anime]}
       />
     </Box>
   )

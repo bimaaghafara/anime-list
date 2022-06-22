@@ -78,7 +78,7 @@ const CollectionList = () => {
               <FormatListBulletedIcon />
             </IconButton>
             {!(collection?.animes?.length) && <Box sx={sx.noCollection}>-</Box>}
-            <Box>
+            <Box sx={{ mt: 1 }}>
                 {collection?.animes?.map((e, i) => (
                   <Box key={i} sx={sx.anime}>
                     <Box sx={sx.animeIamge(e.coverImage.large)} />
