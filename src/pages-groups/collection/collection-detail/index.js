@@ -53,6 +53,9 @@ const CollectionDetail = () => {
           <EditIcon />
         </IconButton>
         <hr />
+        {!(collection?.animes?.length) && (
+          <Typography sx={{ pt: 2 }}>This collection doesn&lsquo;t have any animes yet. </Typography>
+        )}
         {collection?.animes?.map((anime) => 
           <Box key={anime.id} sx={sx.animeCard}>
             <IconButton sx={sx.delete} onClick={() => console.log(anime)}>

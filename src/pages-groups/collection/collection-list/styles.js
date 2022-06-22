@@ -14,7 +14,7 @@ const sx = {
     marginBottom: '16px'
   },
   collectionName: {
-    maxWidth: 'calc(100% - 80px)',
+    maxWidth: 'calc(100% - 125px)',
     display: 'inline-block',
     padding: '0 12px',
     cursor: 'pointer',

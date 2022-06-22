@@ -10,7 +10,7 @@ function MyApp({ Component, pageProps }) {
   return (
     <QueryClientProvider client={queryClient}>
       <>
-        <Stack sx={{ m: '16px 28px'}} direction="row" spacing={2}>
+        <Stack sx={{ p: '16px 28px', borderBottom: '1px solid #ccc' }} direction="row" spacing={2}>
           <Box
             sx={{ cursor: 'pointer' }}
             onClick={() => router.push('/anime')}
