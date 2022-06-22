@@ -7,14 +7,18 @@ const sx = {
   content: {
     maxWidth: '1200px',
     margin: 'auto',
-    padding: '16px'
+    padding: '16px',
+    position: 'relative'
   },
   headerContainer: {
     marginBottom: '16px',
   },
   addToCollection: {
     position: 'absolute',
-    left: '116px',
+    left: {
+      xs: '50%',
+      sm: '116px',
+    },
     transform: 'translate(-50%, 16px)',
     '& button': {
       textTransform: 'none',
