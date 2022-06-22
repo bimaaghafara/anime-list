@@ -1,4 +1,5 @@
 // libs
+import { useState } from "react";
 import { useRouter } from "next/router";
 
 // components
@@ -17,6 +18,7 @@ import {
 } from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 
 // hooks
 import useCollection from "src/hooks/useCollection";
@@ -24,7 +26,6 @@ import useDialog from "src/hooks/useDialog";
 
 // styles
 import sx from './styles';
-import { useState } from "react";
 
 const CollectionList = () => {
   const router = useRouter();
@@ -199,11 +200,14 @@ const CollectionList = () => {
             >
               {collection.name}
             </Typography>
+            <IconButton sx={sx.addNew} onClick={() => handleOpenEdit(collection)}>
+              <EditIcon />
+            </IconButton>
             <IconButton sx={sx.addNew} onClick={() => handleOpenDelete(collection)}>
               <DeleteIcon />
             </IconButton>
-            <IconButton sx={sx.addNew} onClick={() => handleOpenEdit(collection)}>
-              <EditIcon />
+            <IconButton sx={sx.addNew} onClick={() => router.push(`/collection/${collection.name}`)}>
+              <FormatListBulletedIcon />
             </IconButton>
             {!(collection?.animes?.length) && <Box sx={sx.noCollection}>-</Box>}
             <Box>

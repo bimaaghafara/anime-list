@@ -6,7 +6,9 @@ import sx from './styles';
 
 export const AnimeCard = ({
   anime,
-  onClick = () => {}
+  onClick = () => {},
+  hiddenDescription,
+  hiddenClickHere,
 }) => {
   return (
     <Card onClick={onClick}>
@@ -17,16 +19,20 @@ export const AnimeCard = ({
             <Box>{anime?.title?.english}</Box>
             <Box>{anime?.title?.native}</Box>
           </Typography>
-          <Typography sx={sx.description} variant="body2" color="text.secondary">
-            {
-              anime?.description?.length > 300
-                ? `${anime?.description?.slice(0, 300)} ...`
-                : anime?.description
-            }
-          </Typography>
-          <Typography sx={sx.link}>
-            Click here for details
-          </Typography>
+          {!hiddenDescription && (
+            <Typography sx={sx.description} variant="body2" color="text.secondary">
+              {
+                anime?.description?.length > 300
+                  ? `${anime?.description?.slice(0, 300)} ...`
+                  : anime?.description
+              }
+            </Typography>
+          )}
+          {!hiddenClickHere && (
+            <Typography sx={sx.link}>
+              Click here for details
+            </Typography>
+          )}
         </CardContent>
       </CardActionArea>
     </Card>

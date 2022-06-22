@@ -8,7 +8,7 @@ const useCollection = () => {
   const addCollections = (value) => setItem(COLLECTIONS, value);
 
   // collection
-  // const getCollection = (value) => getCollections().find(e => e.name === value);
+  const getCollection = (name) => getCollections().find(e => e.name === name);
   const addCollection = (value) => addCollections([...getCollections(), value]);
   const editCollection = (currentName, collection) => addCollections(
     getCollections().map(e => ({
@@ -30,7 +30,7 @@ const useCollection = () => {
   return {
     getCollections,
     addCollections,
-    // getCollection,
+    getCollection,
     addCollection,
     editCollection,
     deleteCollection,
