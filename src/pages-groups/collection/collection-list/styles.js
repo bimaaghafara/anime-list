@@ -6,13 +6,25 @@ const sx = {
     margin: 'auto',
     padding: '16px'
   },
+  collectionsTitle: {
+    display: 'inline-block',
+    marginBottom: '16px'
+  },
   collectionName: {
+    maxWidth: 'calc(100% - 80px)',
+    display: 'inline-block',
     padding: '0 12px',
     cursor: 'pointer',
     '&:hover': {
       textDecoration: 'underline',
       textUnderlinePosition: 'under',
     },
+  },
+  noCollection: {
+    padding: '0 12px',
+  },
+  addNew: {
+    float: 'right',
   },
   anime: {
     // border: '1px solid red',
