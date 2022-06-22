@@ -1,28 +1,35 @@
 const useCollection = () => {
   const COLLECTIONS = 'collections';
-  const getItem = (key) => {
-    // if (typeof window === 'undefined') return null;
-    return JSON.parse(window.localStorage.getItem(key));
-  };
+  const getItem = (key) => JSON.parse(window.localStorage.getItem(key));
   const setItem = (key, value) => window.localStorage.setItem(key, JSON.stringify(value));
 
   // collections
   const getCollections = () => getItem(COLLECTIONS) || [];
-  const setCollections = (value) => setItem(COLLECTIONS, value);
+  const addCollections = (value) => setItem(COLLECTIONS, value);
 
   // collection
-  const getCollectionBy = (key, value) => getCollections().find(e => e[key] === value);
-  const setCollection = (value) => setCollections([...getCollections(), value])
+  // const getCollectionByName = (value) => getCollections().find(e => e.name === value);
+  // const addCollection = (value) => addCollections([...getCollections(), value]);
+  // const removeCollectionByName = (value) => addCollections(getCollections().filter(e => e.name != value));
+  // const addAnimeToCollection = (collectionName, value) => {
+  //   const currentCollection = getCollectionByName(collectionName);
+  //   const newCollection = {
+  //     ...currentCollection,
+  //     anime: (currentCollection?.anime || []).push(value)
+  //   }
+  // }
 
   // check if collection name is unique
-  const isValidName = (value) => !getCollections().find(e => e.name === value);
+  // const isValidName = (value) => !getCollections().find(e => e.name === value);
 
   return {
     getCollections,
-    setCollections,
-    getCollectionBy,
-    setCollection,
-    isValidName
+    addCollections,
+    // getCollectionByName,
+    // addCollection,
+    // removeCollectionByName,
+    // addAnimeToCollection,
+    // isValidName
   }
 }
 

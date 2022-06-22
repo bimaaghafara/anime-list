@@ -56,8 +56,6 @@ const AnimeDetail = () => {
     image: char?.node?.image?.medium
   }));
 
-  console.log(characters);
-
   return (
     <Box sx={sx.root}>
       <Box sx={sx.bannerImage} component="img" src={anime?.bannerImage} />
