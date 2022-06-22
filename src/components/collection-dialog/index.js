@@ -11,7 +11,8 @@ import {
   DialogContent,
   DialogActions,
   Alert,
-  Snackbar
+  Snackbar,
+  Autocomplete
 } from "@mui/material";
 
 // hooks
@@ -22,13 +23,14 @@ import sx from './styles';
 
 const CollectionDialog = ({
   dialog,
-  dialogCollection,
+  dialogCollection = null,
   setDialogCollection,
   prevDialogCollectionName,
   onSuccess = () => {},
 }) => {
   const [snackbar, setSnackbar] = useState();
   const {
+    getCollections,
     isUniqueName,
     addCollection,
     editCollection,
@@ -53,7 +55,22 @@ const CollectionDialog = ({
     }
     if (dialog.type === "addAnime") {
       return (
-        <Box>addAnime</Box>
+        <Box>
+          <Box>
+            <Autocomplete
+                sx={{ mt: 1 }}
+                value={dialogCollection}
+                onChange={(e, newValue) => {
+                  setDialogCollection(newValue);
+                }}
+                options={(getCollections() || []).map(e => ({
+                  ...e, label: e.name
+                }))}
+                isOptionEqualToValue={(option, value) => option.name === value.name}
+                renderInput={(params) => <TextField {...params} label="Collection" />}
+              />
+            </Box>
+        </Box>
       );
     }
     return (
