@@ -12,6 +12,15 @@ const sx = {
   headerContainer: {
     marginBottom: '16px',
   },
+  addToCollection: {
+    position: 'absolute',
+    left: '116px',
+    transform: 'translate(-50%, 16px)',
+    '& button': {
+      textTransform: 'none',
+      width: '168px'
+    }
+  },
   headerImage: {
     display: {
       xs: 'block',
