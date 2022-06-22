@@ -1,6 +1,6 @@
 // libs
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { useState } from 'react';
 
 // components
 import {
@@ -10,7 +10,11 @@ import {
   Paper,
   Button
 } from '@mui/material';
+import CollectionDialog from 'src/components/collection-dialog';
 import AddIcon from '@mui/icons-material/Add';
+
+// hooks
+import useDialog from "src/hooks/useDialog";
 
 // styles
 import sx from './styles';
@@ -20,6 +24,9 @@ import { useAnimeDetailQuery } from './graphql/anime-detail';
 
 const AnimeDetail = () => {
   const router = useRouter();
+  const dialog = useDialog();
+  const [prevDialogCollectionName, setPrevDialogCollectionName] = useState();
+  const [dialogCollection, setDialogCollection] = useState();
   const { data, isLoading, error } = useAnimeDetailQuery(
     { id: Number(router?.query?.id || 0) },
     { enabled: router?.isReady }
@@ -57,13 +64,25 @@ const AnimeDetail = () => {
     image: char?.node?.image?.medium
   }));
 
+  const handleOpenAddAnimeToCollection = () => {
+    dialog.setTitle('Add Anime to Collection');
+    dialog.open();
+    dialog.setType("addAnime");
+  }
+
   return (
     <Box sx={sx.root}>
       <Box sx={sx.bannerImage} component="img" src={anime?.bannerImage} />
       <Box sx={sx.content}>
         <Box sx={sx.headerContainer}>
           <Box sx={sx.addToCollection}>
-            <Button variant="contained" startIcon={<AddIcon />}>Collection</Button>
+            <Button
+              variant="contained"
+              startIcon={<AddIcon />}
+              onClick={handleOpenAddAnimeToCollection}
+            >
+              Collection
+            </Button>
           </Box>
           <Box sx={sx.headerImage} component="img" src={anime?.coverImage?.large} />
           <Box sx={sx.headerRight}>
@@ -103,6 +122,12 @@ const AnimeDetail = () => {
           </Grid>
         </Grid>
       </Box>
+      <CollectionDialog
+        dialog={dialog}
+        dialogCollection={dialogCollection}
+        setDialogCollection={setDialogCollection}
+        prevDialogCollectionName={prevDialogCollectionName}
+      />
     </Box>
   )
 }

@@ -35,7 +35,7 @@ const CollectionDialog = ({
     deleteCollection,
   } = useCollection();
   const renderDialogContent = () => {
-    if (dialog.type === "add" || dialog.type === "edit")
+    if (dialog.type === "add" || dialog.type === "edit") {
       return (
         <Box sx={{ padding: '12px 0'}}>
           <TextField
@@ -50,6 +50,12 @@ const CollectionDialog = ({
           />
         </Box>
       );
+    }
+    if (dialog.type === "addAnime") {
+      return (
+        <Box>addAnime</Box>
+      );
+    }
     return (
       <Box>Are you sure to delete collection &quot;{dialogCollection?.name}&quot;?</Box>
     );
