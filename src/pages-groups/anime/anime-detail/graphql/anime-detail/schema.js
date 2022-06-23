@@ -11,7 +11,7 @@ export const AnimeDetailSchema = gql`
       description
       bannerImage
       coverImage {
-        large
+        medium
       }
       format
       episodes

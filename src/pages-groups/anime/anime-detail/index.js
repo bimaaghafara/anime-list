@@ -77,7 +77,7 @@ const AnimeDetail = () => {
       <Box sx={sx.bannerImage} component="img" src={anime?.bannerImage} />
       <Box sx={sx.content}>
         <Box sx={sx.headerContainer}>
-          <Box sx={sx.headerImage} component="img" src={anime?.coverImage?.large} />
+          <Box sx={sx.headerImage} component="img" src={anime?.coverImage?.medium} />
           <Box sx={sx.headerRight}>
             <Box sx={sx.titleContainer}>
               <Typography>{anime?.title?.english}</Typography>
