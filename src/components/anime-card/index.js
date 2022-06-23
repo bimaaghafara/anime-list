@@ -1,4 +1,5 @@
 // components
+import Image from 'next/image';
 import { Box, Card, CardActionArea, CardContent, Typography } from "@mui/material";
 
 // styles
@@ -13,7 +14,14 @@ export const AnimeCard = ({
   return (
     <Card onClick={onClick}>
       <CardActionArea>
-        <Box sx={sx.bannerIamge(anime?.bannerImage || anime?.coverImage?.large)} />
+        {/* <Box sx={sx.bannerIamge(anime?.bannerImage || anime?.coverImage?.large)} /> */}
+        <Image
+          src={anime?.bannerImage || anime?.coverImage?.large}
+          width="300px"
+          height="100px"
+          layout="responsive" 
+          objectFit="cover"
+        />
         <CardContent>
           <Typography sx={sx.title} gutterBottom variant="h5" component="div">
             <Box>{anime?.title?.english}</Box>

@@ -10,7 +10,10 @@ const nextConfig = {
         permanent: true,
       },
     ]
-  }
+  },
+  images: {
+    domains: ['s4.anilist.co'],
+  },
 }
 
 module.exports = nextConfig;
