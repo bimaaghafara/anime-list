@@ -26,9 +26,9 @@ import sx from './styles';
 import useDialog from "src/hooks/useDialog";
 
 // graphql
-import { useAnimeListQuery } from './graphql/anime-list';
+import { getAnimeList, useAnimeListQuery } from './graphql/anime-list';
 
-const AnimeList = () => {
+const AnimeList = ({ initialData }) => {
   const router = useRouter();
   const dialog = useDialog();
   const [dialogCollection, setDialogCollection] = useState();
@@ -37,7 +37,7 @@ const AnimeList = () => {
   const perPage = Number(router?.query?.perPage || 10);
   const { data, isLoading, error } = useAnimeListQuery(
     { page, perPage },
-    { enabled: router?.isReady }
+    { enabled: router?.isReady, initialData }
   );
 
   if ( error ) return <div className='loader'>Error!</div>;
@@ -112,6 +112,12 @@ const AnimeList = () => {
       />
     </Box>
   )
+}
+
+export async function getServerSideProps(context) {
+  const { page = 1, perPage = 10 } = context.query;
+  const initialData = await getAnimeList({ page, perPage });
+  return { props: { initialData } }
 }
 
 export default AnimeList;
