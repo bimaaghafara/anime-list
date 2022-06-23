@@ -21,6 +21,7 @@ export const AnimeCard = ({
           height="100px"
           layout="responsive" 
           objectFit="cover"
+          priority
         />
         <CardContent>
           <Typography sx={sx.title} gutterBottom variant="h5" component="div">
