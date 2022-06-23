@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 // components
 import {
   Box,
+  Button,
   Typography,
   Pagination,
   PaginationItem,
@@ -12,6 +13,7 @@ import {
   MenuItem
 } from '@mui/material';
 import { AnimeCard } from 'src/components/anime-card';
+import AddIcon from '@mui/icons-material/Add';
 
 // styles
 import sx from './styles';
@@ -37,10 +39,22 @@ const AnimeList = () => {
     router.push(`/anime?page=${page}&perPage=${perPage}`);
   }
 
+  const handleOpenAddAnimeToCollection = () => {}
+
   return (
     <Box sx={sx.root}>
       <Box sx={sx.content}>
-        <Typography sx={sx.title}>Anime List</Typography>
+        <Box sx={sx.titleContainer}>
+          <Typography variant="h5" sx={sx.title}>Anime List</Typography>
+          <Button
+            startIcon={<AddIcon />}
+            variant="contained"
+            sx={sx.addToCollection}
+            onClick={handleOpenAddAnimeToCollection}
+          >
+            Collection
+          </Button>
+        </Box>
         {animeList.map((anime) => 
           <Box key={anime.id} sx={sx.animeCard}>
             <AnimeCard

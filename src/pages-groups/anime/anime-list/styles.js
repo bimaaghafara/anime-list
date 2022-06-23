@@ -6,13 +6,15 @@ const sx = {
     margin: 'auto',
     padding: '16px'
   },
+  titleContainer: {
+    padding: '12px'
+  },
   title: {
-    fontSize: {
-      xs: '18px',
-      md: '24px',
-      lg: '32px',
-    },
-    padding: '12px 12px 0px'
+    marginBottom: '16px',
+    display: 'inline-block'
+  },
+  addToCollection: {
+    float: 'right'
   },
   animeCard: {
     width: {
