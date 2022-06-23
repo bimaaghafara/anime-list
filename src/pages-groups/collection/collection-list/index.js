@@ -80,7 +80,7 @@ const CollectionList = () => {
             <Box sx={{ mt: 1 }}>
                 {collection?.animes?.map((e, i) => (
                   <Box key={i} sx={sx.anime}>
-                    <Box sx={sx.animeIamge(e.bannerImage || e.coverImage?.medium)} />
+                    <Box sx={sx.animeIamge(e.bannerImage || e.coverImage?.large)} />
                     <Typography>{e.title.english}</Typography>
                     <Typography>{e.title.native}</Typography>
                   </Box>

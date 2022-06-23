@@ -23,7 +23,7 @@ export const AnimeListSchema = gql`
         description
         bannerImage
         coverImage {
-          medium
+          large
         }
       }
     }
