@@ -45,7 +45,7 @@ const sx = {
     background: `url("${src}") #eee no-repeat center center / cover`,
     backgroundSize: 'cover',
     width: '100%',
-    paddingBottom: '100%',
+    paddingBottom: '40%',
     marginBottom: '8px'
   }),
 }

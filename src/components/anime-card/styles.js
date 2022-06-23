@@ -8,7 +8,7 @@ const sx = {
   bannerIamge: (src) => ({
     background: `url("${src}") #eee no-repeat center center / cover`,
     backgroundSize: "cover",
-    height: "160px",
+    paddingBottom: '40%',
     margin: "16px 16px 0"
   }),
   description: {

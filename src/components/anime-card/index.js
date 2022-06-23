@@ -13,7 +13,7 @@ export const AnimeCard = ({
   return (
     <Card onClick={onClick}>
       <CardActionArea>
-        <Box sx={sx.bannerIamge(anime?.bannerImage)} />
+        <Box sx={sx.bannerIamge(anime?.bannerImage || anime?.coverImage?.large )} />
         <CardContent>
           <Typography sx={sx.title} gutterBottom variant="h5" component="div">
             <Box>{anime?.title?.english}</Box>
@@ -22,8 +22,8 @@ export const AnimeCard = ({
           {!hiddenDescription && (
             <Typography sx={sx.description} variant="body2" color="text.secondary">
               {
-                anime?.description?.length > 300
-                  ? `${anime?.description?.slice(0, 300)} ...`
+                anime?.description?.length > 150
+                  ? `${anime?.description?.slice(0, 150)} ...`
                   : anime?.description
               }
             </Typography>
