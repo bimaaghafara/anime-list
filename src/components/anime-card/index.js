@@ -13,7 +13,7 @@ export const AnimeCard = ({
   return (
     <Card onClick={onClick}>
       <CardActionArea>
-        <Box sx={sx.bannerIamge(anime?.bannerImage || anime?.coverImage?.medium )} />
+        <Box sx={sx.bannerIamge(anime?.coverImage?.medium || anime?.bannerImage)} />
         <CardContent>
           <Typography sx={sx.title} gutterBottom variant="h5" component="div">
             <Box>{anime?.title?.english}</Box>
