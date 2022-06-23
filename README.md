@@ -1,34 +1,30 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Anime List
+An app that consist of several pages:
+* Anime List: user can see list of anime with pagination and bulk add to collection features.
+* Anime Detail: user can see details of an anime with add anime to collection feature.
+* Collection List: user can see list of collection with edit, delete, details collection feature.
+* Collection Detail: user can see details of an collection and related animes.
 
-## Getting Started
 
-First, run the development server:
+## Demo
+https://anime-list-bimaaghafara.vercel.app/
 
-```bash
-npm run dev
-# or
-yarn dev
+## Installing
+```
+npm install / yarn install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## How to run
+```
+npm run dev / yarn dev
+```
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## Built With
+User Interface
+* [React @18.1.0](https://github.com/facebook/react) - A declarative, efficient, and flexible JavaScript library for building user interfaces.
+* [Nextjs @12.1.6](https://github.com/vercel/next.js) - The React Framework that gives you the best developer experience with all the features you need for production: hybrid static & server rendering, TypeScript support, smart bundling, route pre-fetching, and more. No config needed.
+* [MUI / Material - UI @5.8.3](https://github.com/mui/material-ui) - A comprehensive library of React components that features implementation of Google's Material Design system.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Graphql
+* [Graphql-request @4.3.0](https://github.com/prisma-labs/graphql-request) - Minimal GraphQL client supporting Node and browsers for scripts or simple apps.
+* [React-query @3.39.1](https://github.com/tannerlinsley/react-query) - Hooks for fetching, caching, deduping multiple requests, performance optimizations, infinite query, ... and updating asynchronous data in React app, all without touching any "global state".

@@ -18,7 +18,7 @@ export const AnimeCard = ({
         <Image
           src={anime?.bannerImage || anime?.coverImage?.large}
           width="300px"
-          height="100px"
+          height="120px"
           layout="responsive" 
           objectFit="cover"
           priority
