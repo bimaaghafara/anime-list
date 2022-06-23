@@ -135,6 +135,18 @@ const CollectionDialog = ({
     return valid;
   }
 
+  const isValidRequiredAnimes = () => {
+    const valid = animes?.length;
+    if (!valid) {
+      setSnackbar({
+        open: true,
+        severity: 'error',
+        message: 'Please select some animes!'
+      });
+    }
+    return valid;
+  }
+
   const handleSubmitAddNew = () => {
     if (!isValidRequiredCollectionName()) return;
     if (!isValidUniqueCollectionName()) return;
@@ -177,6 +189,7 @@ const CollectionDialog = ({
 
   const handleSubmitAddAnimeToCollection = () => {
     if (!isValidRequiredCollectionName()) return;
+    if (!isValidRequiredAnimes()) return;
     addAnimesToCollection(dialogCollection?.name, animes);
     dialog.close();
     setSnackbar({

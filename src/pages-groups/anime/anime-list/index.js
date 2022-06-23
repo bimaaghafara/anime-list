@@ -1,4 +1,5 @@
 // libs
+import { useState } from 'react';
 import { useRouter } from 'next/router';
 
 // components
@@ -10,19 +11,28 @@ import {
   PaginationItem,
   FormControl,
   Select,
-  MenuItem
+  MenuItem,
+  Checkbox
 } from '@mui/material';
+import CollectionDialog from 'src/components/collection-dialog';
+
 import { AnimeCard } from 'src/components/anime-card';
 import AddIcon from '@mui/icons-material/Add';
 
 // styles
 import sx from './styles';
 
+// hooks
+import useDialog from "src/hooks/useDialog";
+
 // graphql
 import { useAnimeListQuery } from './graphql/anime-list';
 
 const AnimeList = () => {
   const router = useRouter();
+  const dialog = useDialog();
+  const [dialogCollection, setDialogCollection] = useState();
+  const [dialogAnimes, setDialogAnimes] = useState([]);
   const page = Number(router?.query?.page || 1);
   const perPage = Number(router?.query?.perPage || 10);
   const { data, isLoading, error } = useAnimeListQuery(
@@ -39,7 +49,19 @@ const AnimeList = () => {
     router.push(`/anime?page=${page}&perPage=${perPage}`);
   }
 
-  const handleOpenAddAnimeToCollection = () => {}
+  const handleOpenAddAnimeToCollection = () => {
+    dialog.setTitle('Add Anime to Collection');
+    dialog.open();
+    dialog.setType("addAnime");
+  }
+
+  const handleChangeCheckboxAnime = (e, anime) => {
+    if (e.target.checked) {
+      setDialogAnimes([...dialogAnimes, anime])
+    } else {
+      setDialogAnimes(dialogAnimes.filter(e => e.id !== anime.id))
+    }
+  }
 
   return (
     <Box sx={sx.root}>
@@ -62,6 +84,7 @@ const AnimeList = () => {
               anime={anime}
               onClick={() => router.push(`/anime/${anime.id}`)}
             />
+            <Checkbox sx={sx.checkboxAnime} onChange={(e) => handleChangeCheckboxAnime(e, anime)} />
           </Box>
         )}
         <Box sx={sx.paginationContainer}>
@@ -81,6 +104,12 @@ const AnimeList = () => {
           />
         </Box>
       </Box>
+      <CollectionDialog
+        dialog={dialog}
+        dialogCollection={dialogCollection}
+        setDialogCollection={setDialogCollection}
+        animes={dialogAnimes}
+      />
     </Box>
   )
 }

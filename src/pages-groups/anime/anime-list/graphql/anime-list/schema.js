@@ -15,13 +15,16 @@ export const AnimeListSchema = gql`
       media(
         type: ANIME
       ) {
+        id
         title {
           english
           native
         }
-        id
-        bannerImage
         description
+        bannerImage
+        coverImage {
+          large
+        }
       }
     }
   }

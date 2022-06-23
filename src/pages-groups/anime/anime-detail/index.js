@@ -9,11 +9,9 @@ import {
   Grid,
   Paper,
   Button,
-  Stack,
   Chip
 } from '@mui/material';
 import CollectionDialog from 'src/components/collection-dialog';
-import AddIcon from '@mui/icons-material/Add';
 
 // hooks
 import useCollection from "src/hooks/useCollection";
@@ -28,7 +26,6 @@ import { useAnimeDetailQuery } from './graphql/anime-detail';
 const AnimeDetail = () => {
   const router = useRouter();
   const dialog = useDialog();
-  const [prevDialogCollectionName, setPrevDialogCollectionName] = useState();
   const [dialogCollection, setDialogCollection] = useState();
   const { data, isLoading, error } = useAnimeDetailQuery(
     { id: Number(router?.query?.id || 0) },
@@ -143,7 +140,6 @@ const AnimeDetail = () => {
         dialog={dialog}
         dialogCollection={dialogCollection}
         setDialogCollection={setDialogCollection}
-        prevDialogCollectionName={prevDialogCollectionName}
         animes={[anime]}
       />
     </Box>

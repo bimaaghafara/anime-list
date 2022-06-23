@@ -25,7 +25,13 @@ const sx = {
     },
     display: 'inline-block',
     padding: '12px',
-    verticalAlign: 'top'
+    verticalAlign: 'top',
+    position: 'relative'
+  },
+  checkboxAnime: {
+    position: 'absolute',
+    bottom: '16px',
+    right: '16px'
   },
   paginationContainer: {
     marginTop: '12px',
