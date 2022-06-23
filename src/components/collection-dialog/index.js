@@ -49,7 +49,7 @@ const CollectionDialog = ({
   const renderDialogContent = () => {
     if (dialog.type === "add" || dialog.type === "edit") {
       return (
-        <Box sx={{ padding: '12px 0'}}>
+        <Box sx={sx.dialogCollectionTextField}>
           <TextField
             value={dialogCollection?.name || ''}
             onChange={e => setDialogCollection({
@@ -86,11 +86,11 @@ const CollectionDialog = ({
               renderInput={(params) => <TextField {...params} label="Collection" />}
             />
           </Box>
-          <Box sx={{ m: '12px 0', fontSize: '12px' }}>
+          <Box sx={sx.collapseCollectionTriggerContainer}>
             <span>Select collection or </span>
             <Typography
               variant="span"
-              sx={{ color: 'blue', cursor: 'pointer', '&:hover': { textDecoration: 'underline' } }}
+              sx={sx.collapseCollectionTrigger}
               onClick={toggleCollapseShowAddCollection}
             >
               add new one
@@ -99,7 +99,7 @@ const CollectionDialog = ({
           <Collapse in={collapseShowAddCollection}>
             <Paper sx={{ p: 2 }}>
               <Box>
-                <IconButton sx={{ float: 'right', m: '-8px -8px 0 0' }} onClick={toggleCollapseShowAddCollection}>
+                <IconButton sx={sx.collapseCollectionClose} onClick={toggleCollapseShowAddCollection}>
                   <CloseIcon />
                 </IconButton>
               </Box>
