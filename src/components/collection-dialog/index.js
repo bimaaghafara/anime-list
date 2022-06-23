@@ -12,8 +12,13 @@ import {
   DialogActions,
   Alert,
   Snackbar,
-  Autocomplete
+  Autocomplete,
+  Collapse,
+  Paper,
+  Typography,
+  IconButton
 } from "@mui/material";
+import CloseIcon from '@mui/icons-material/Close';
 
 // hooks
 import useCollection from "src/hooks/useCollection";
@@ -31,6 +36,8 @@ const CollectionDialog = ({
   dialogAnime,
 }) => {
   const [snackbar, setSnackbar] = useState();
+  const [collapseShowAddCollection, setCollapseShowAddCollection] = useState(false);
+  const [collapseCollection, setCollapseCollection] = useState({});
   const {
     getCollections,
     addCollection,
@@ -62,22 +69,68 @@ const CollectionDialog = ({
       );
     }
     if (dialog.type === "addAnime") {
+      const toggleCollapseShowAddCollection = () => setCollapseShowAddCollection(!collapseShowAddCollection);
       return (
         <Box>
           <Box>
             <Autocomplete
-                sx={{ mt: 1 }}
-                value={dialogCollection}
-                onChange={(e, newValue) => {
-                  setDialogCollection(newValue);
-                }}
-                options={(getCollections() || []).map(e => ({
-                  ...e, label: e.name
-                }))}
-                isOptionEqualToValue={(option, value) => option.name === value.name}
-                renderInput={(params) => <TextField {...params} label="Collection" />}
-              />
-            </Box>
+              sx={{ mt: 1 }}
+              value={dialogCollection}
+              onChange={(e, newValue) => {
+                setDialogCollection(newValue);
+              }}
+              options={(getCollections() || []).map(e => ({
+                ...e, label: e.name
+              }))}
+              isOptionEqualToValue={(option, value) => option.name === value.name}
+              renderInput={(params) => <TextField {...params} label="Collection" />}
+            />
+          </Box>
+          <Box sx={{ m: '12px 0', fontSize: '12px' }}>
+            <span>Select collection or </span>
+            <Typography
+              variant="span"
+              sx={{ color: 'blue', cursor: 'pointer', '&:hover': { textDecoration: 'underline' } }}
+              onClick={toggleCollapseShowAddCollection}
+            >
+              add new one
+            </Typography>
+          </Box>
+          <Collapse in={collapseShowAddCollection}>
+            <Paper sx={{ p: 2 }}>
+              <Box>
+                <IconButton sx={{ float: 'right', m: '-8px -8px 0 0' }} onClick={toggleCollapseShowAddCollection}>
+                  <CloseIcon />
+                </IconButton>
+              </Box>
+              <Box>
+                Add Collection
+              </Box>
+              <Box sx={{ padding: '16px 0'}}>
+                <TextField
+                  value={collapseCollection?.name || ''}
+                  onChange={e => setCollapseCollection({
+                    ...collapseCollection,
+                    name: e.target.value
+                  })}
+                  fullWidth
+                  label="Collection Name"
+                  variant="outlined"
+                />
+              </Box>
+              <Box>
+                <Button
+                  variant="contained"
+                  onClick={() => handleSubmitAddNew({
+                    collection: collapseCollection,
+                    callback: toggleCollapseShowAddCollection
+                  })}
+                >
+                  Submit
+                </Button>
+              </Box>
+            </Paper>
+          </Collapse>
         </Box>
       );
     }
@@ -86,20 +139,25 @@ const CollectionDialog = ({
     );
   }
 
-  const isValidRequiredCollectionName = () => {
-    const valid = dialogCollection?.name;
+  const isValidRequiredCollectionName = ({
+    collection = dialogCollection,
+    message = 'Collection name is required!'
+  } = {}) => {
+    const valid = collection?.name;
     if (!valid) {
       setSnackbar({
         open: true,
         severity: 'error',
-        message: 'Collection name is required!'
+        message
       });
     }
     return valid;
   }
 
-  const isValidUniqueCollectionName = () => {
-    const valid = !getCollections().find(e => e.name === dialogCollection?.name)
+  const isValidUniqueCollectionName = ({
+    collection = dialogCollection
+  } = {}) => {
+    const valid = !getCollections().find(e => e.name === collection?.name)
     if (!valid) {
       setSnackbar({
         open: true,
@@ -110,9 +168,11 @@ const CollectionDialog = ({
     return valid;
   }
 
-  const isValidSpecialCHarsCollectionName = () => {
+  const isValidSpecialCHarsCollectionName = ({
+    collection = dialogCollection
+  } = {}) => {
     const format = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
-    const valid = !format.test(dialogCollection?.name);
+    const valid = !format.test(collection?.name);
     if (!valid) {
       setSnackbar({
         open: true,
@@ -147,12 +207,15 @@ const CollectionDialog = ({
     return valid;
   }
 
-  const handleSubmitAddNew = () => {
-    if (!isValidRequiredCollectionName()) return;
-    if (!isValidUniqueCollectionName()) return;
-    if (!isValidSpecialCHarsCollectionName()) return;
-    addCollection(dialogCollection);
-    dialog.close();
+  const handleSubmitAddNew = ({
+    collection = dialogCollection,
+    callback = dialog.close
+  } = {}) => {
+    if (!isValidRequiredCollectionName({ collection })) return;
+    if (!isValidUniqueCollectionName({ collection })) return;
+    if (!isValidSpecialCHarsCollectionName({ collection })) return;
+    addCollection(collection);
+    callback();
     setSnackbar({
       open: true,
       severity: 'success',
@@ -188,7 +251,7 @@ const CollectionDialog = ({
   };
 
   const handleSubmitAddAnimeToCollection = () => {
-    if (!isValidRequiredCollectionName()) return;
+    if (!isValidRequiredCollectionName({ message: 'Please select one collection!' })) return;
     if (!isValidRequiredAnimes()) return;
     addAnimesToCollection(dialogCollection?.name, animes);
     dialog.close();
