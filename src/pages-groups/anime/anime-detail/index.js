@@ -11,6 +11,7 @@ import {
   Button,
   Chip
 } from '@mui/material';
+import Skeletons from './components/skeletons';
 import CollectionDialog from 'src/components/collection-dialog';
 
 // hooks
@@ -34,7 +35,7 @@ const AnimeDetail = () => {
   const { getCollections } = useCollection();
 
   if ( error ) return <div className='loader'>Error!</div>;
-  if ( isLoading || !data ) return <div className='loader'>Loading . . .</div>;
+  if ( isLoading || !data ) return <Skeletons />;
 
   const anime = data?.Media;
   const collections = getCollections().filter(e => e?.animes?.find(a => a.id === anime?.id));
@@ -110,8 +111,9 @@ const AnimeDetail = () => {
                 Add New
               </Button>
               <Box>
-                {collections.map(c => (
+                {collections.map((c, i) => (
                   <Chip
+                    key={i}
                     sx={sx.collectionChip}
                     label={c.name}
                     variant="outlined"
