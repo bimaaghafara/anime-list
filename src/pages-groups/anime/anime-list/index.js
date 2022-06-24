@@ -15,7 +15,7 @@ import {
   Checkbox
 } from '@mui/material';
 import CollectionDialog from 'src/components/collection-dialog';
-
+import Skeletons from './components/skeletons';
 import { AnimeCard } from 'src/components/anime-card';
 import AddIcon from '@mui/icons-material/Add';
 
@@ -40,9 +40,6 @@ const AnimeList = () => {
     { enabled: router?.isReady }
   );
 
-  if ( error ) return <div className='loader'>Error!</div>;
-  if ( isLoading || !data ) return <div className='loader'>Loading . . .</div>;
-
   const animeList = data?.Page?.media || [];
   const totalPage = data?.Page?.pageInfo?.total || 0;
   const goToPage = ({page, perPage }) => {
@@ -63,20 +60,11 @@ const AnimeList = () => {
     }
   }
 
-  return (
-    <Box sx={sx.root}>
-      <Box sx={sx.content}>
-        <Box sx={sx.titleContainer}>
-          <Typography variant="h5" sx={sx.title}>Anime List</Typography>
-          <Button
-            startIcon={<AddIcon />}
-            variant="contained"
-            sx={sx.addToCollection}
-            onClick={handleOpenAddAnimeToCollection}
-          >
-            Collection
-          </Button>
-        </Box>
+  const renderContent = () => {
+    if ( error ) return <div className='loader'>Error!</div>;
+    if ( isLoading || !data) return <Skeletons />;
+    return (
+      <>
         {animeList.map((anime) => 
           <Box key={anime.id} sx={sx.animeCard}>
             <AnimeCard
@@ -103,13 +91,33 @@ const AnimeList = () => {
             renderItem={(item) => <PaginationItem {...item} />}
           />
         </Box>
+        <CollectionDialog
+          dialog={dialog}
+          dialogCollection={dialogCollection}
+          setDialogCollection={setDialogCollection}
+          animes={dialogAnimes}
+        />
+      </>
+    )
+  }
+
+  return (
+    <Box sx={sx.root}>
+      <Box sx={sx.content}>
+        <Box sx={sx.titleContainer}>
+          <Typography variant="h5" sx={sx.title}>Anime List</Typography>
+          <Button
+            startIcon={<AddIcon />}
+            variant="contained"
+            sx={sx.addToCollection}
+            onClick={handleOpenAddAnimeToCollection}
+            disabled={isLoading || !data}
+          >
+            Collection
+          </Button>
+        </Box>
+        {renderContent()}
       </Box>
-      <CollectionDialog
-        dialog={dialog}
-        dialogCollection={dialogCollection}
-        setDialogCollection={setDialogCollection}
-        animes={dialogAnimes}
-      />
     </Box>
   )
 }
